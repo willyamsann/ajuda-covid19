@@ -12,20 +12,20 @@ module.exports = {
             .join('ongs', 'ongs.id', '=','incidents.ong_id')
             .limit(5)
             .offset((page -1)*5)
-            .select(['incidents.*','ongs.nome','ongs.email','ongs.whatsapp','ongs.cidade','ongs.uf']);
+            .select(['incidents.*','ongs.nome','ongs.email','ongs.whatsapp','ongs_','ongs.cidade','ongs.uf']);
 
             response.header('X-Total-Count', count['count(*)']);    
             return response.json(incidents);
         },
  
         async create(request, response){
-        const {titulo,descricao,valor} = request.body;
+        const {titulo,descricao,tipo} = request.body;
         const ong_id = request.headers.autorizacao;
 
         const [id] = await connection('incidents').insert({
             titulo,
             descricao,  
-            valor,
+            tipo,
             ong_id,
 
         });
